@@ -1,5 +1,5 @@
 ---
-name: design-agent
+name: create-agent
 allowed-tools: Read, Edit, Grep, Glob
 description: |
   Comprehensive Agent Design, Creation and modification using Vercel AI SDK generateObject with Zod schemas. used when claude needs to create, prompt, modify, fix, refactor or improve any agent code, and any time a Zod Schema is modified that is used by an agent.

@@ -1,5 +1,5 @@
 ---
-name: fix-workflow
+name: fix
 description: |
   Use this skill when fixing bugs, resolving defects, or addressing issues. Provides structured workflow for reproduction, root cause analysis, minimal fix implementation, and regression testing. Invoke when user asks to: fix a bug, resolve an issue, debug a problem, or address a defect.
 ---
