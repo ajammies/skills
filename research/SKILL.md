@@ -70,6 +70,7 @@ Explore codebase and online sources to gather information on a topic.
 - **Authoritative sources** - Prefer official docs and proven engineering blogs
 - **Context matters** - Relate findings back to the specific project
 - **Cite sources** - Always include URLs for external information
+- **AI-first** - Focus on clarity, structure, and verifiable outputs (no human-only advice like time-boxing)
 
 ## Code Rules
 
