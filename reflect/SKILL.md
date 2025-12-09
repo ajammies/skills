@@ -6,19 +6,21 @@ description: End-of-session reflection for continuous improvement. Use when user
 
 # Reflect
 
-Analyze session and recommend improvements.
+Analyze session chats, git commits, and other available logs to recommend improvements.
 
 ## WORKFLOW
 
 **Follow these steps. After each, state: "✓ Step N done. Next: Step N+1"**
 
-1. **Review** - Scan full chat history for corrections, preferences, frustrations
+1. **Review** - Scan full chat history, git commits, logs for what was done, user corrections, user preferences, user frustrations.
 
-2. **Analyze** - Note what worked, what caused friction, patterns
+2. **Analyze** - Think deeply about the root cause reasons for this feedback, an isolate specific behavior from claude that contributed.
 
-3. **Output** - Generate recommendations table with type, priority, change, why
+3. **Output** - Create a report that recommends new changes claude workflow (beyond whats already impemented). They should be derivative changes. These changes should be intended to automate the user workflow to require zero feedback in the future.
 
 ## Output
+
+(note: wrap the text to fit in screen contraints)
 
 ### Session Summary
 
@@ -38,6 +40,8 @@ Brief recap: what was done, what worked, what didn't.
 - `claude.md` — Project conventions
 - `skill` — Update existing skill
 - `new-skill` — New repeatable workflow
+- `command` - Update existing commands
+- `new-command` - Create new command
 
 **Priority:**
 - `high` — Caused errors or user corrections
