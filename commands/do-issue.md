@@ -25,11 +25,9 @@ Arguments: $ARGUMENTS
 
 | Issue Type | Skill to Invoke |
 |------------|-----------------|
-| Feature / Enhancement | `feature-workflow` |
-| Bug / Fix | `fix-workflow` |
-| Refactor | `refactor-workflow` |
-| Documentation | `docs-workflow` |
-| Test | `test-workflow` |
+| Feature / Enhancement | `create-feature` |
+| Bug / Fix | `fix` |
+| Refactor | `refactor` |
 
 5. **Pass context** - Provide the skill with issue details, acceptance criteria, and relevant context
 
