@@ -4,11 +4,15 @@ A composable collection of skills and commands for Claude Code.
 
 ## Installation
 
-Clone into your Claude settings directory:
+Clone into your Claude settings directory and run the init script:
 
 ```bash
 git clone https://github.com/ajammies/skills.git ~/.claude/skills
+cd ~/.claude/skills
+./init.sh
 ```
+
+The init script creates a symlink from `~/.claude/commands` to the commands in this repo, making all slash commands available globally.
 
 ## Skills
 
