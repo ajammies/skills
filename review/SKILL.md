@@ -16,7 +16,7 @@ Structured code review with checklist-driven analysis and actionable findings.
 - **Branch diff**: `git diff main...HEAD`
 - **Specific files**: Use semantic search to find relevant code
 - If scope > 400 lines, suggest splitting into smaller reviews
-- ⏸️ Confirm scope with user
+- ⏸️ **STOP**: Confirm scope with user. Wait for user input before continuing.
 
 ### Step 2: Context - Understand the codebase
 - Use Explore agent to understand existing patterns
@@ -37,7 +37,7 @@ For each file/change, evaluate with ✓ (pass) or ✗ (fail):
 
 ### Step 4: Report - Output findings
 Use Review Report format below. Group by severity.
-- ⏸️ Present findings to user
+- ⏸️ **STOP**: Present findings to user. Wait for user input before continuing.
 
 ### Step 5: Iterate - Address findings
 - Suggest specific fixes with code examples

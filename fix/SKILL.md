@@ -33,13 +33,13 @@ git checkout -b fix/<issue-or-description>
 - **Explore the codebase** - Use Explore agent to understand affected components
 - **Research online** - Search for similar issues, known bugs in dependencies, or relevant patterns
 - Identify affected components and user impact
-- ⏸️ Confirm understanding with user if unclear
+- ⏸️ **STOP**: Confirm understanding with user if unclear. Wait for user input before continuing.
 
 ### Step 3: Plan reproduction
 - Review environment requirements (see `references/reproduction-environments.md`)
 - Draft reproduction plan with specific steps
 - Identify any data, credentials, or setup needed
-- ⏸️ Present reproduction plan to user for approval
+- ⏸️ **STOP**: Present reproduction plan to user for approval. Wait for user input before continuing.
 
 ### Step 4: Reproduce - Recreate the bug
 - Set up environment per approved plan
@@ -47,14 +47,14 @@ git checkout -b fix/<issue-or-description>
 - Add temporary logging/debugging to trace the issue if needed
 - Document exact reproduction steps and observed behavior
 - If cannot reproduce: gather more information before proceeding
-- ⏸️ Confirm reproduction before continuing
+- ⏸️ **STOP**: Confirm reproduction before continuing. Wait for user input before continuing.
 
 ### Step 5: Analyze - Find root cause
 - Use the **5 Whys technique** (see `references/root-cause-analysis.md`)
 - Ask "Why?" repeatedly until you reach the fundamental cause
 - Avoid fixing symptoms - find the actual source
 - Consider: Is this a code bug, design flaw, or missing requirement?
-- ⏸️ Present root cause analysis to user
+- ⏸️ **STOP**: Present root cause analysis to user. Wait for user confirmation before continuing.
 
 ### Step 6: Write regression test
 - Write a test that **fails** with the current buggy behavior
@@ -93,7 +93,7 @@ gh pr create --title "fix: <description>" --body "<bug-analysis-report>"
 ```
 Use the Bug Analysis Report (from Step 5) as the PR body.
 
-⏸️ Wait for user to approve PR
+⏸️ **STOP**: Wait for user to approve PR before merging.
 
 ### Step 12: Merge and cleanup
 ```bash

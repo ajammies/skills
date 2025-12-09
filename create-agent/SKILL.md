@@ -26,12 +26,12 @@ description: |
 1. **Understand** - Read existing schemas and agents in the area
 
 2. **Schema first** - Define Zod schema with `.describe()` on ambiguous fields
-   ⏸️ Review schema design with user
+   ⏸️ **STOP**: Review schema design with user. Wait for user input before continuing.
 
 3. **Prompt** - Write system prompt with domain knowledge (not step-by-step)
 
 4. **Implement** - Create agent as pure function, single transformation
-   ⏸️ Review implementation with user
+   ⏸️ **STOP**: Review implementation with user. Wait for user input before continuing.
 
 5. **Test** - Add tests for valid input, edge cases, malformed input
 

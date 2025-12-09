@@ -56,7 +56,7 @@ Only include tools the skill actually needs.
 ## WORKFLOW
 
 1. **Step** - Description
-   ⏸️ Pause for user input if needed
+   ⏸️ **STOP**: Pause for user input. Wait for user input before continuing.
 
 ## Principles
 
