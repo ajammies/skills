@@ -80,3 +80,27 @@ Follow this style: type(scope): brief description, then detailed explanation.
 ```
 
 Examples help Claude understand the desired style and level of detail more clearly than descriptions alone.
+
+## Diagnostic Report Pattern
+
+For skills that analyze problems (bugs, performance, security), include severity and precise location:
+
+```markdown
+## Analysis Report
+
+**Severity**: [Critical/High/Medium/Low]
+- Critical: System failure, data loss, security vulnerability
+- High: Major functionality broken
+- Medium: Edge cases, inconsistent behavior
+- Low: Cosmetic, minor inconvenience
+
+**Location**: `path/to/file.ts:123` - [function/component name]
+
+**Summary**: [What was found]
+
+**Details**: [Root cause analysis, evidence, related issues]
+
+**Recommendation**: [Specific fix with code location]
+```
+
+Include file:line references so users can navigate directly to the source.
