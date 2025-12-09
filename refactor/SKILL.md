@@ -59,7 +59,11 @@ git checkout -b refactor/<description>
   - No new features added
 - ⏸️ Present changes to user
 
-### Step 6: PR - Push and create pull request
+### Step 6: Code Review
+- Use `review` skill to analyze changes
+- Fix any issues found before proceeding
+
+### Step 7: PR - Push and create pull request
 ```bash
 git push -u origin refactor/<description>
 gh pr create --title "refactor: <description>" --body "<changes made>"
