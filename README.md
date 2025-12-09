@@ -82,5 +82,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on creating and improving 
 ## References
 
 - [anthropics/skills](https://github.com/anthropics/skills) - Official examples
+- [diet103/claude-code-infrastructure-showcase](https://github.com/diet103/claude-code-infrastructure-showcase) - Infrastructure patterns and examples
 - [Claude Skills Deep Dive](https://leehanchung.github.io/blogs/2025/10/26/claude-skills-deep-dive/) - Detailed guide
 - [awesome-claude-code](https://github.com/hesreallyhim/awesome-claude-code) - Community resources
