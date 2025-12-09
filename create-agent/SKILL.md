@@ -9,7 +9,17 @@ description: |
 
 # Agent creation, modification, error handling
 
-## WORKFLOW
+## Table of Contents
+- [Workflow](#workflow)
+- [Principles](#principles)
+- [Functional Composition](#functional-composition)
+- [Template](#template)
+- [When to Use](#when-to-use--not-use)
+- [References](#references)
+- [Checklist](#checklist)
+- [Limitations](#limitations)
+
+## Workflow
 
 **Follow these steps. After each, state: "✓ Step N done. Next: Step N+1"**
 
@@ -26,10 +36,6 @@ description: |
 5. **Test** - Add tests for valid input, edge cases, malformed input
 
 **Escalation**: If agent fails validation 3 times, use context7 to research the pattern before continuing.
-
-## Overview
-
-A user may ask you create, modify, fix, refactor or improve any agent code. An agent is any code scaffolding that calls llms (either to generate text or generateObject). LLM calls are fragile, since they are non-deterministic, and require strict adherance to design principles, typed schemas, explicit descritions of ZOD properties using .describe() and error handling. This skill strictly enforces best practices of agent architecture, prompting, Zod schema patterns, .describe() usage, prompting for structured output, error handling.
 
 ## Principles
 
@@ -98,23 +104,24 @@ export const proseAgent = async (input: StoryWithPlot): Promise<Prose> => {
 | Prompting | [prompting-guide.md](references/prompting-guide.md) | Writing system prompts |
 | Errors | [error-handling.md](references/error-handling.md) | NoObjectGeneratedError, debugging |
 
-## Success Criteria
-
-A well-designed agent:
-- Has < 20 schema fields (split if larger)
-- System prompt < 500 words
-- Single return statement
-- All ambiguous fields have `.describe()`
-- Tests pass for valid input, edge cases, malformed input
-
 ## Checklist
 
+**Design:**
 - [ ] Agent named after output type (`fooAgent` → `Foo`)
+- [ ] Single responsibility (one transformation)
+- [ ] Schema < 20 fields (split if larger)
+- [ ] Input/output types explicit
+
+**Schema:**
 - [ ] Schema defined before prompt
 - [ ] `.describe()` on ambiguous/similar fields
+
+**Prompt:**
 - [ ] System prompt provides domain knowledge, not steps
-- [ ] Single responsibility (one transformation)
-- [ ] Input/output types explicit
+- [ ] System prompt < 500 words
+
+**Implementation:**
+- [ ] Single return statement
 - [ ] Tests cover valid input, edge cases, malformed input
 
 ## Limitations
