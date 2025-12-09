@@ -95,6 +95,14 @@ Present using this structure (used in Step 4 and as PR body):
 ```markdown
 ## Bug Analysis
 
+**Severity**: [Critical/High/Medium/Low]
+- Critical: System failure, data loss, security vulnerability
+- High: Major functionality broken
+- Medium: Edge cases, inconsistent behavior
+- Low: Cosmetic, minor inconvenience
+
+**Location**: `path/to/file.ts:123` - [function/component name]
+
 **Symptom**: [What the user experienced]
 
 **Reproduction Steps**:
@@ -109,10 +117,10 @@ Present using this structure (used in Step 4 and as PR body):
 **Root Cause**: [Clear statement of the fundamental issue]
 
 **Related Vulnerabilities**:
-- [Other locations with similar patterns]
-- [Areas that might have the same bug]
+- `path/to/similar.ts:45` - [Same pattern exists here]
+- [Other areas that might have the same bug]
 
-**Proposed Fix**: [Minimal change to resolve]
+**Proposed Fix**: [Minimal change to resolve - be specific about what changes]
 
 **Risk Assessment**: [Low/Medium/High] - [Reasoning]
 ```
