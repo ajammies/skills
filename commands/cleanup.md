@@ -75,8 +75,8 @@ Proceed with cleanup? [y/N]
 ## Commands
 
 ```bash
-# Merged branches
-git branch --merged main
+# Merged branches (exclude main, use || true to handle empty results)
+git branch --merged main | grep -v "^\*\|main" || true
 
 # Stale branches
 git for-each-ref --sort=committerdate refs/heads/ --format='%(refname:short) %(committerdate:relative)'
@@ -87,12 +87,17 @@ gh issue list --state open
 # Stale PRs
 gh pr list --state open
 
+# Uncommitted changes
+git status --short
+
 # Outdated deps (Node)
-npm outdated
+npm outdated || true
 
 # Security audit (Node)
-npm audit
+npm audit || true
 ```
+
+**Note:** Use `|| true` for commands that may return empty results or non-zero exit codes when nothing is found.
 
 ## Safety
 
