@@ -27,7 +27,22 @@ Multi-step workflows invoked automatically based on user intent.
 
 ## Commands
 
-Single-action prompts invoked with `/command-name`.
+Single-action prompts invoked with `/command-name`. Commands infer intent from context when no arguments provided.
+
+### Skill Commands
+
+| Command | Description |
+|---------|-------------|
+| `/create-feature` | Implement a new feature (routes to create-feature skill) |
+| `/fix` | Fix a bug (routes to fix skill) |
+| `/refactor` | Refactor code safely (routes to refactor skill) |
+| `/review` | Review code changes (routes to review skill) |
+| `/research` | Research a topic (routes to research skill) |
+| `/reflect` | Analyze session for improvements (routes to reflect skill) |
+| `/create-skill` | Create or update a skill (routes to create-skill skill) |
+| `/create-agent` | Create or modify an agent (routes to create-agent skill) |
+
+### Utility Commands
 
 | Command | Description |
 |---------|-------------|
