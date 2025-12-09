@@ -53,6 +53,15 @@ Prefer concise examples over verbose explanations.
 
 Each workflow skill defines its own appropriate steps. Never force a template step count onto workflows - a bug fix workflow has different needs than a feature workflow. Design steps based on what the specific task requires.
 
+### AI-First Principles
+
+Skills are executed by AI, not humans. Avoid principles that only apply to human workflows:
+- No time-boxing (AI doesn't fatigue)
+- No human-to-human collaboration tips
+- No "take breaks" or pacing advice
+
+Focus on principles that improve AI execution: clarity, structure, explicit criteria, and verifiable outputs.
+
 ### Set Appropriate Degrees of Freedom
 
 Match the level of specificity to the task's fragility and variability:
