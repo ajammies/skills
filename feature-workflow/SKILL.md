@@ -61,15 +61,24 @@ This skill follows an explicit workflow for creating features and major changes.
   - Verify the feature works end-to-end
 
 ### Step 7: Code Review
-  - Self-review against checklist:
-    - [ ] Correctness: Does it do what the TDD specified?
-    - [ ] Edge cases: Boundary conditions and empty states handled?
-    - [ ] Errors: Failures return meaningful messages?
-    - [ ] Security: Input validated, no secrets, no injection risks?
-    - [ ] Simplicity: Clear, readable, follows code rules?
-    - [ ] Coupling: Easy to delete, no tentacles across files?
-    - [ ] Tests: New code and error paths covered?
-    - [ ] Performance: No N+1 queries, unbounded loops, or memory leaks?
+  - Evaluate each checklist item with ✓ (pass) or ✗ (fail):
+    - Correctness: Does it do what the TDD specified?
+    - Edge cases: Boundary conditions and empty states handled?
+    - Errors: Failures return meaningful messages?
+    - Security: Input validated, no secrets, no injection risks?
+    - Simplicity: Clear, readable, follows code rules?
+    - Coupling: Easy to delete, no tentacles across files?
+    - Tests: New code and error paths covered?
+    - Performance: No N+1 queries, unbounded loops, or memory leaks?
+  - Output format:
+    ```
+    ## Code Review
+    - ✓ Correctness: [brief explanation]
+    - ✓ Edge cases: [brief explanation]
+    - ✗ Security: [issue found and location]
+    ...
+    **Result:** X/8 passed - [N issues to address]
+    ```
   - ⏸️ Wait for user approval
 
 ### Step 8: Push and create PR

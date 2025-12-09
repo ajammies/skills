@@ -24,16 +24,16 @@ Structured code review with checklist-driven analysis and actionable findings.
 - Identify areas user should be aware of for their own learning
 
 ### Step 3: Analyze - Review against checklist
-For each file/change, check:
+For each file/change, evaluate with ✓ (pass) or ✗ (fail):
 
-- [ ] **Correctness**: Does it do what it claims?
-- [ ] **Edge cases**: Boundary conditions and empty states handled?
-- [ ] **Error handling**: Failures caught and return meaningful messages?
-- [ ] **Security**: Input validated, no secrets, no injection risks?
-- [ ] **Simplicity**: Clear, readable, follows code rules?
-- [ ] **Coupling**: Easy to delete, no tentacles across files?
-- [ ] **Tests**: New code and error paths covered?
-- [ ] **Performance**: No N+1 queries, unbounded loops, or memory leaks?
+- **Correctness**: Does it do what it claims?
+- **Edge cases**: Boundary conditions and empty states handled?
+- **Error handling**: Failures caught and return meaningful messages?
+- **Security**: Input validated, no secrets, no injection risks?
+- **Simplicity**: Clear, readable, follows code rules?
+- **Coupling**: Easy to delete, no tentacles across files?
+- **Tests**: New code and error paths covered?
+- **Performance**: No N+1 queries, unbounded loops, or memory leaks?
 
 ### Step 4: Report - Output findings
 Use Review Report format below. Group by severity.
@@ -54,16 +54,25 @@ Use Review Report format below. Group by severity.
 
 **Scope**: [What was reviewed]
 **Lines reviewed**: [Count]
-**Verdict**: [Pass / Pass with notes / Needs changes]
+**Result**: X/8 passed
+
+## Checklist
+
+- ✓ Correctness: [brief explanation]
+- ✓ Edge cases: [brief explanation]
+- ✗ Error handling: [issue found]
+- ✓ Security: [brief explanation]
+- ✓ Simplicity: [brief explanation]
+- ✓ Coupling: [brief explanation]
+- ✗ Tests: [issue found]
+- ✓ Performance: [brief explanation]
 
 ## Findings
 
 | Severity | Location | Category | Issue | Fix |
 |----------|----------|----------|-------|-----|
-| Critical | `file.ts:123` | Security | [Issue] | [Suggestion] |
-| High | `file.ts:45` | Correctness | [Issue] | [Suggestion] |
-| Medium | `file.ts:78` | Edge cases | [Issue] | [Suggestion] |
-| Low | `file.ts:90` | Simplicity | [Issue] | [Suggestion] |
+| High | `file.ts:45` | Error handling | [Issue] | [Suggestion] |
+| Medium | `file.ts:78` | Tests | [Issue] | [Suggestion] |
 
 ## Worth Knowing
 
