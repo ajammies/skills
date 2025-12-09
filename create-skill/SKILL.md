@@ -13,10 +13,10 @@ description: Guide for creating effective skills. This skill should be used when
 1. **Purpose** - Define what the skill does and when to invoke it
 
 2. **Design** - Draft SKILL.md with WORKFLOW, principles, references
-   ⏸️ Review skill design with user
+   ⏸️ **STOP**: Review skill design with user. Wait for user input before continuing.
 
 3. **Hooks** - Determine if skill needs PreToolUse/PostToolUse hooks
-   ⏸️ Review hook design with user (if applicable)
+   ⏸️ **STOP**: Review hook design with user (if applicable). Wait for user input before continuing.
 
 4. **Create** - Write files to `.claude/skills/<name>/`
    ⟳ Repeat if user requests changes

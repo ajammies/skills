@@ -22,14 +22,14 @@ This skill follows an explicit workflow for creating features and major changes.
   git push origin main  # Ensure local commits are pushed before branching
   git checkout -b feat/<feature-name>
   ```
-  If not on main branch, ⏸️ Wait for user instruction
+  If not on main branch, ⏸️ **STOP**: Wait for user instruction before continuing.
   If main is ahead of origin/main, push first to avoid stale commits in PR
 
 
 ### Step 2: Research - Gather context and best practices
   - Use `research` skill to find relevant patterns and best practices
   - Explore codebase for existing solutions and conventions
-  - ⏸️ Present research findings before planning
+  - ⏸️ **STOP**: Present research findings before planning. Wait for user input before continuing.
 
 ### Step 3: Propose a Technical Design Document
   - Enter planning mode
@@ -40,7 +40,7 @@ This skill follows an explicit workflow for creating features and major changes.
     - List of Planned Changes
     - List of small, atomic, commits (each is deletable, testable, single purpose)
   - Testing plan (user flows, edge cases, common failures)
-  - ⏸️ Wait for user approval of TDD
+  - ⏸️ **STOP**: Wait for user approval of TDD before continuing.
 
 ### Step 4: Write plan to `docs/plans/plan-<feature>.md`
 
@@ -49,7 +49,7 @@ This skill follows an explicit workflow for creating features and major changes.
     - Concise, clear, imperative commit message (the "what")
     - Comprehensive, concise, commit message (the "how" and "why")
     - Do NOT reference claude code.
-    - ⏸️ Wait for user approval after each commit unless instructed otherwise
+    - ⏸️ **STOP**: Wait for user approval after each commit unless instructed otherwise.
 
 ### Step 6: Test
   - Check for full test coverage
@@ -63,14 +63,14 @@ This skill follows an explicit workflow for creating features and major changes.
 ### Step 7: Code Review
   - Use `review` skill to analyze changes
   - Fix any issues found before proceeding
-  - ⏸️ Wait for user approval
+  - ⏸️ **STOP**: Wait for user approval before continuing.
 
 ### Step 8: Push and create PR
    ```bash
    git push -u origin <branch>
    gh pr create --title "<title>" --body "<description>"
    ```
-   ⏸️ Wait for user to approve PR
+   ⏸️ **STOP**: Wait for user to approve PR before continuing.
 
 ### Step 9: Merge and cleanup
    ```bash
@@ -85,12 +85,12 @@ This skill follows an explicit workflow for creating features and major changes.
     |------|----------|--------|-----|
     | `claude.md` | high/medium/low | Specific change | Reason |
     | `skill` | high/medium/low | Specific change | Reason |
-  - ⏸️ Ask user if they want to implement any recommendations
+  - ⏸️ **STOP**: Ask user if they want to implement any recommendations. Wait for user input before continuing.
 
 ## Error Handling
 - Clearly describe the error
 - Recommend the best path to proceed
-- ⏸️ Wait for user approval
+- ⏸️ **STOP**: Wait for user approval before continuing.
 
 ## Examples
 

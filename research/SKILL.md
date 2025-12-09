@@ -15,7 +15,7 @@ Explore codebase and online sources to gather information on a topic.
 - Identify the core question or topic
 - Determine scope: codebase-only, online-only, or both
 - Note any constraints (specific frameworks, patterns, etc.)
-- ⏸️ Confirm understanding if ambiguous
+- ⏸️ **STOP**: Confirm understanding if ambiguous. Wait for user input before continuing.
 
 ### Step 2: Explore codebase - Find existing patterns
 - Use Explore agent to search for relevant implementations

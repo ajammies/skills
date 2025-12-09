@@ -25,7 +25,7 @@ git checkout -b refactor/<description>
   ```bash
   npm run test:run
   ```
-- ⏸️ If tests fail, fix them first or confirm with user before proceeding
+- ⏸️ **STOP**: If tests fail, fix them first or confirm with user before proceeding. Wait for user input before continuing.
 - Note current behavior and dependencies
 
 ### Step 3: Plan - Define scope and approach
@@ -37,7 +37,7 @@ git checkout -b refactor/<description>
   - Simplify conditionals
   - Remove duplication
   - Reduce coupling
-- ⏸️ Confirm scope with user
+- ⏸️ **STOP**: Confirm scope with user. Wait for user input before continuing.
 
 ### Step 4: Implement
 - Iteratively implement each change in the plan
@@ -45,7 +45,7 @@ git checkout -b refactor/<description>
   - Comprehensive, concise, commit message (the "how" and "why")
   - Do NOT reference claude code.
   - Run tests after each change - if tests fail, revert and try smaller change
-  - ⏸️ Wait for user approval after each commit unless instructed otherwise
+  - ⏸️ **STOP**: Wait for user approval after each commit unless instructed otherwise.
 - Keep bug fixes separate - create issues for bugs found
 
 ### Step 5: Review - Verify behavior preserved
@@ -57,7 +57,7 @@ git checkout -b refactor/<description>
   - Code is simpler/clearer
   - Coupling reduced
   - No new features added
-- ⏸️ Present changes to user
+- ⏸️ **STOP**: Present changes to user. Wait for user input before continuing.
 
 ### Step 6: Code Review
 - Use `review` skill to analyze changes
@@ -68,7 +68,7 @@ git checkout -b refactor/<description>
 git push -u origin refactor/<description>
 gh pr create --title "refactor: <description>" --body "<changes made>"
 ```
-⏸️ Wait for user to approve and merge
+⏸️ **STOP**: Wait for user to approve and merge before continuing.
 
 ## Output Format
 
