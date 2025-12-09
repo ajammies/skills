@@ -49,6 +49,10 @@ The context window is a public good. Skills share the context window with everyt
 
 Prefer concise examples over verbose explanations.
 
+### No Forced Step Counts
+
+Each workflow skill defines its own appropriate steps. Never force a template step count onto workflows - a bug fix workflow has different needs than a feature workflow. Design steps based on what the specific task requires.
+
 ### Set Appropriate Degrees of Freedom
 
 Match the level of specificity to the task's fragility and variability:
