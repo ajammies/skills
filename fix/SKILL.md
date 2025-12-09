@@ -80,7 +80,11 @@ git checkout -b fix/<issue-or-description>
 npm run test:run && npm run typecheck
 ```
 
-### Step 10: Clean up and PR
+### Step 10: Code Review
+- Use `review` skill to analyze changes
+- Fix any issues found before proceeding
+
+### Step 11: Clean up and PR
 - Remove any temporary logging/debug statements added during investigation
 - Ensure no sensitive data is logged
 ```bash
@@ -91,7 +95,7 @@ Use the Bug Analysis Report (from Step 5) as the PR body.
 
 ⏸️ Wait for user to approve PR
 
-### Step 11: Merge and cleanup
+### Step 12: Merge and cleanup
 ```bash
 gh pr merge --squash --delete-branch
 git checkout main && git pull
