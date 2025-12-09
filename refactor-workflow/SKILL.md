@@ -51,12 +51,12 @@ git checkout -b refactor/<description>
 ### Step 5: Review - Verify behavior preserved
 - Run full test suite
 - Compare before/after behavior
-- Check against refactoring goals:
-  - [ ] Behavior unchanged
-  - [ ] Tests still pass
-  - [ ] Code is simpler/clearer
-  - [ ] Coupling reduced
-  - [ ] No new features added
+- Evaluate each goal with ✓ (pass) or ✗ (fail):
+  - Behavior unchanged
+  - Tests still pass
+  - Code is simpler/clearer
+  - Coupling reduced
+  - No new features added
 - ⏸️ Present changes to user
 
 ### Step 6: PR - Push and create pull request
@@ -75,6 +75,15 @@ gh pr create --title "refactor: <description>" --body "<changes made>"
 
 **Scope**: [What was refactored]
 **Goal**: [Why - reduce complexity, improve clarity, etc.]
+**Result**: X/5 passed
+
+## Review
+
+- ✓ Behavior unchanged: [brief explanation]
+- ✓ Tests still pass: All 42 tests passing
+- ✓ Code is simpler/clearer: [brief explanation]
+- ✗ Coupling reduced: [issue found]
+- ✓ No new features added: [brief explanation]
 
 ## Changes Made
 
@@ -82,12 +91,6 @@ gh pr create --title "refactor: <description>" --body "<changes made>"
 |------|--------|--------|
 | `file.ts` | Extracted method X | Reduce duplication |
 | `file.ts` | Renamed Y to Z | Improve clarity |
-
-## Behavior Verification
-
-- [x] All tests pass
-- [x] No functionality changed
-- [x] Manual verification complete
 ```
 
 ## Principles
