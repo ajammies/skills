@@ -30,40 +30,49 @@ git checkout -b fix/<issue-or-description>
 ### Step 2: Understand - Gather context
 - Read the issue/bug report thoroughly
 - Collect error messages, logs, stack traces
+- **Explore the codebase** - Use Explore agent to understand affected components
+- **Research online** - Search for similar issues, known bugs in dependencies, or relevant patterns
 - Identify affected components and user impact
 - ⏸️ Confirm understanding with user if unclear
 
-### Step 3: Reproduce - Recreate the bug
-- Set up environment (see `references/reproduction-environments.md`)
+### Step 3: Plan reproduction
+- Review environment requirements (see `references/reproduction-environments.md`)
+- Draft reproduction plan with specific steps
+- Identify any data, credentials, or setup needed
+- ⏸️ Present reproduction plan to user for approval
+
+### Step 4: Reproduce - Recreate the bug
+- Set up environment per approved plan
 - Execute steps to trigger the bug
-- Document exact reproduction steps
+- Add temporary logging/debugging to trace the issue if needed
+- Document exact reproduction steps and observed behavior
 - If cannot reproduce: gather more information before proceeding
 - ⏸️ Confirm reproduction before continuing
 
-### Step 4: Analyze - Find root cause
+### Step 5: Analyze - Find root cause
 - Use the **5 Whys technique** (see `references/root-cause-analysis.md`)
 - Ask "Why?" repeatedly until you reach the fundamental cause
 - Avoid fixing symptoms - find the actual source
 - Consider: Is this a code bug, design flaw, or missing requirement?
 - ⏸️ Present root cause analysis to user
 
-### Step 5: Write regression test
+### Step 6: Write regression test
 - Write a test that **fails** with the current buggy behavior
 - Test should pass once the fix is applied
 - This prevents the bug from being reintroduced later
 - Commit the failing test separately (optional)
 
-### Step 6: Identify related vulnerabilities
+### Step 7: Identify related vulnerabilities
 - Search codebase for similar patterns that could have the same bug
 - List any other locations where this issue might reoccur
 - Note in the Bug Analysis Report for future reference or additional fixes
 
-### Step 7: Fix - Implement minimal change
+### Step 8: Fix - Implement minimal change
 - Apply the **minimal change principle** - smallest fix that resolves the issue
 - Verify the regression test now passes
 - Run existing tests to ensure no breakage
 
-### Step 8: Verify - Confirm resolution
+### Step 9: Verify - Confirm resolution
 - Re-run the reproduction steps - bug should be gone
 - Test edge cases related to the fix
 - Run full test suite
@@ -71,16 +80,18 @@ git checkout -b fix/<issue-or-description>
 npm run test:run && npm run typecheck
 ```
 
-### Step 9: PR - Create pull request
+### Step 10: Clean up and PR
+- Remove any temporary logging/debug statements added during investigation
+- Ensure no sensitive data is logged
 ```bash
 git push -u origin <branch>
 gh pr create --title "fix: <description>" --body "<bug-analysis-report>"
 ```
-Use the Bug Analysis Report (from Step 4) as the PR body.
+Use the Bug Analysis Report (from Step 5) as the PR body.
 
 ⏸️ Wait for user to approve PR
 
-### Step 10: Merge and cleanup
+### Step 11: Merge and cleanup
 ```bash
 gh pr merge --squash --delete-branch
 git checkout main && git pull
