@@ -46,18 +46,48 @@ This skill follows an explicit workflow for creating features and major changes.
     - Do NOT reference claude code.
     - ⏸️ Wait for user approval after each commit unless instructed otherwise
 
-### Step 5: Push and create PR
+### Step 5: Test
+  - Check for full test coverage
+  - Run tests and typecheck
+    ```bash
+    npm run test:run && npm run typecheck
+    ```
+  - Fix any failures before proceeding
+  - Verify the feature works end-to-end
+
+### Step 6: Code Review
+  - Self-review against checklist:
+    - [ ] Correctness: Does it do what the TDD specified?
+    - [ ] Edge cases: Boundary conditions and empty states handled?
+    - [ ] Errors: Failures return meaningful messages?
+    - [ ] Security: Input validated, no secrets, no injection risks?
+    - [ ] Simplicity: Clear, readable, follows code rules?
+    - [ ] Coupling: Easy to delete, no tentacles across files?
+    - [ ] Tests: New code and error paths covered?
+    - [ ] Performance: No N+1 queries, unbounded loops, or memory leaks?
+  - ⏸️ Wait for user approval
+
+### Step 7: Push and create PR
    ```bash
    git push -u origin <branch>
    gh pr create --title "<title>" --body "<description>"
    ```
    ⏸️ Wait for user to approve PR
 
-### Step 6: Merge and cleanup
+### Step 8: Merge and cleanup
    ```bash
    gh pr merge --squash --delete-branch
    git checkout main && git pull
    ```
+
+### Step 9: Reflect
+  - Review what worked, what caused friction
+  - Output recommendations table:
+    | Type | Priority | Change | Why |
+    |------|----------|--------|-----|
+    | `claude.md` | high/medium/low | Specific change | Reason |
+    | `skill` | high/medium/low | Specific change | Reason |
+  - ⏸️ Ask user if they want to implement any recommendations
 
 ## Error Handling
 - Clearly describe the error
