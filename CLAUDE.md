@@ -137,4 +137,4 @@ npm run db:migrate
 
 ## Skill Design
 
-Skills are self-contained. Duplicate short content (< 30 lines) rather than sharing references across skills. See [anthropics/skills](https://github.com/anthropics/skills), [diet103 showcase](https://github.com/diet103/claude-code-infrastructure-showcase), [deep dive](https://leehanchung.github.io/blogs/2025/10/26/claude-skills-deep-dive/).
+Skills are self-contained. Duplicate short content (< 30 lines) rather than sharing references across skills. See [anthropics/skills](https://github.com/anthropics/skills), [diet103 showcase](https://github.com/diet103/claude-code-infrastructure-showcase), [deep dive](https://leehanchung.github.io/blogs/2025/10/26/claude-skills-deep-dive/), [awesome-claude-code](https://github.com/hesreallyhim/awesome-claude-code).
