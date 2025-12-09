@@ -26,9 +26,13 @@ This skill follows an explicit workflow for creating features and major changes.
   If main is ahead of origin/main, push first to avoid stale commits in PR
 
 
-### Step 2: Propose a Technical Design Document
+### Step 2: Research - Gather context and best practices
+  - Use `research` skill to find relevant patterns and best practices
+  - Explore codebase for existing solutions and conventions
+  - ⏸️ Present research findings before planning
+
+### Step 3: Propose a Technical Design Document
   - Enter planning mode
-  - Analyse the current architecture
   - Create the TDD that has the following sections
     - Overview - concise, plain-english describe the delta between intended state and current state, and key considerations.
     - Approach - high level overview of how the feature will be implemented, and the justification why this approach is superlative
@@ -38,16 +42,16 @@ This skill follows an explicit workflow for creating features and major changes.
   - Testing plan (user flows, edge cases, common failures)
   - ⏸️ Wait for user approval of TDD
 
-### Step 3: Write plan to `docs/plans/plan-<feature>.md`
+### Step 4: Write plan to `docs/plans/plan-<feature>.md`
 
-### Step 4: Implement
+### Step 5: Implement
   - Iteratively implement each commit in the plan
     - Concise, clear, imperative commit message (the "what")
     - Comprehensive, concise, commit message (the "how" and "why")
     - Do NOT reference claude code.
     - ⏸️ Wait for user approval after each commit unless instructed otherwise
 
-### Step 5: Test
+### Step 6: Test
   - Check for full test coverage
   - Run tests and typecheck
     ```bash
@@ -56,7 +60,7 @@ This skill follows an explicit workflow for creating features and major changes.
   - Fix any failures before proceeding
   - Verify the feature works end-to-end
 
-### Step 6: Code Review
+### Step 7: Code Review
   - Self-review against checklist:
     - [ ] Correctness: Does it do what the TDD specified?
     - [ ] Edge cases: Boundary conditions and empty states handled?
@@ -68,20 +72,20 @@ This skill follows an explicit workflow for creating features and major changes.
     - [ ] Performance: No N+1 queries, unbounded loops, or memory leaks?
   - ⏸️ Wait for user approval
 
-### Step 7: Push and create PR
+### Step 8: Push and create PR
    ```bash
    git push -u origin <branch>
    gh pr create --title "<title>" --body "<description>"
    ```
    ⏸️ Wait for user to approve PR
 
-### Step 8: Merge and cleanup
+### Step 9: Merge and cleanup
    ```bash
    gh pr merge --squash --delete-branch
    git checkout main && git pull
    ```
 
-### Step 9: Reflect
+### Step 10: Reflect
   - Review what worked, what caused friction
   - Output recommendations table:
     | Type | Priority | Change | Why |
