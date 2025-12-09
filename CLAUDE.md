@@ -72,11 +72,12 @@ npm run build
 
 <!-- Customize for your team's process -->
 
-1. Create branch from `main`: `<type>/<description>`
-2. Make atomic commits with descriptive messages
-3. Run tests before pushing
-4. Create PR with description and test plan
-5. Squash merge after approval
+1. **Always push main before branching** - Avoid stale commits polluting PRs
+2. Create branch from `main`: `<type>/<description>`
+3. Make atomic commits with descriptive messages
+4. Run tests before pushing
+5. Create PR with description and test plan
+6. Squash merge after approval
 
 ### Branch Prefixes
 

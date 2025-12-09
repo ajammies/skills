@@ -20,9 +20,11 @@ This skill follows an explicit workflow for creating features and major changes.
 ### Step 1: Branch - Create branch from main
   ```bash
   git checkout main && git pull
+  git push origin main  # Ensure local commits are pushed before branching
   git checkout -b feat/<feature-name>
   ```
   If not on main branch, ⏸️ Wait for user instruction
+  If main is ahead of origin/main, push first to avoid stale commits in PR
    
 
 ### Step 2: Propose a Technical Design Document
