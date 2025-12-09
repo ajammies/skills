@@ -1,5 +1,5 @@
 ---
-name: feature-workflow
+name: create-feature
 description: |
   Use this skill when implementing new features or major changes. Provides structured workflow for branching, planning (TDD), implementing via atomic commits, testing, code review, and PR creation. Invoke when user asks to: create a feature, add functionality, implement something new, or build a capability.
 ---

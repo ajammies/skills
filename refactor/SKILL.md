@@ -1,5 +1,5 @@
 ---
-name: refactor-workflow
+name: refactor
 description: |
   Use this skill when restructuring existing code without changing behavior. Guides safe refactoring with tests before/after, incremental changes, and behavior preservation. Invoke when user asks to: refactor code, clean up code, restructure, reduce complexity, or improve code quality.
 ---
