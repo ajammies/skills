@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "rules": [
+    {
+      "skill": "create-agent",
+      "priority": "high",
+      "keywords": ["agent", "zod", "schema", "generateObject"]
+    },
+    {
+      "skill": "create-feature",
+      "priority": "high",
+      "keywords": ["feature", "implement", "add functionality"]
+    },
+    {
+      "skill": "create-skill",
+      "priority": "medium",
+      "keywords": ["skill", "workflow"]
+    },
+    {
+      "skill": "fix",
+      "priority": "critical",
+      "keywords": ["fix", "bug", "broken", "debug"]
+    },
+    {
+      "skill": "refactor",
+      "priority": "medium",
+      "keywords": ["refactor", "restructure", "clean up", "simplify"]
+    },
+    {
+      "skill": "reflect",
+      "priority": "low",
+      "keywords": ["reflect", "session review"]
+    },
+    {
+      "skill": "research",
+      "priority": "medium",
+      "keywords": ["research", "explore", "investigate", "best practices"]
+    },
+    {
+      "skill": "review",
+      "priority": "high",
+      "keywords": ["review", "check changes", "analyze code"]
+    }
+  ]
+}
