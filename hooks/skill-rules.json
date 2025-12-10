@@ -40,6 +40,11 @@
       "skill": "review",
       "priority": "critical",
       "keywords": ["review", "check changes", "analyze code"]
+    },
+    {
+      "skill": "test",
+      "priority": "critical",
+      "keywords": ["test", "coverage", "write tests", "unit test", "add tests"]
     }
   ]
 }
