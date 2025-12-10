@@ -194,6 +194,11 @@ project/
 
 ## References
 
-- [best-practices.md](references/best-practices.md) - Universal testing principles
-- [python.md](references/python.md) - pytest patterns and conventions
-- [typescript.md](references/typescript.md) - Jest/Vitest patterns and conventions
+**Core:**
+- [best-practices.md](references/best-practices.md) - Universal testing principles (AAA, pyramid, isolation)
+- [python.md](references/python.md) - pytest patterns, fixtures, mocking
+- [typescript.md](references/typescript.md) - Vitest patterns, mocking, coverage
+
+**Advanced (load on-demand):**
+- [integration.md](references/integration.md) - Integration test patterns (API, database)
+- [e2e.md](references/e2e.md) - E2E testing with Playwright
