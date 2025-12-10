@@ -56,6 +56,163 @@ Optimal test distribution for maintainability and speed:
 - Browser automation or API sequences
 - Expensive to maintain
 
+## Integration Test Patterns
+
+Integration tests verify that components work together correctly.
+
+### API Integration Test
+
+```python
+# Test that API endpoint correctly interacts with database
+def test_create_user_api(client, db):
+    # Arrange
+    payload = {"email": "new@example.com", "name": "New User"}
+
+    # Act
+    response = client.post("/api/users", json=payload)
+
+    # Assert - Check response
+    assert response.status_code == 201
+    data = response.json()
+    assert data["email"] == "new@example.com"
+
+    # Assert - Verify database state
+    user = db.query(User).filter_by(email="new@example.com").first()
+    assert user is not None
+    assert user.name == "New User"
+```
+
+### Service Integration Test
+
+```python
+# Test that services communicate correctly
+def test_order_service_creates_payment(order_service, payment_service, db):
+    # Arrange
+    user = create_user()
+    cart = create_cart(user, items=[{"product_id": 1, "qty": 2}])
+
+    # Act
+    order = order_service.checkout(cart)
+
+    # Assert - Order created
+    assert order.status == "pending"
+
+    # Assert - Payment initiated
+    payment = payment_service.get_by_order(order.id)
+    assert payment is not None
+    assert payment.amount == cart.total
+```
+
+### Database Integration Test
+
+```python
+# Test database operations with real database
+@pytest.fixture
+def db():
+    """Create test database and rollback after each test."""
+    engine = create_engine("sqlite:///:memory:")
+    Base.metadata.create_all(engine)
+    session = Session(engine)
+    yield session
+    session.rollback()
+    session.close()
+
+def test_user_cascade_delete(db):
+    # Arrange
+    user = User(email="test@example.com")
+    post = Post(title="Test", author=user)
+    db.add_all([user, post])
+    db.commit()
+
+    # Act
+    db.delete(user)
+    db.commit()
+
+    # Assert - Post should be deleted too
+    assert db.query(Post).count() == 0
+```
+
+**Integration Test Guidelines:**
+- Use real dependencies (database, cache) when possible
+- Isolate with transactions that rollback
+- Test the contract between components
+- Slower than unit tests - be selective
+
+## E2E Test Patterns
+
+E2E tests verify complete user flows through the entire system.
+
+### Critical User Flow
+
+```python
+# Test complete purchase flow
+def test_user_can_complete_purchase(browser):
+    # Login
+    browser.goto("/login")
+    browser.fill("email", "user@example.com")
+    browser.fill("password", "password123")
+    browser.click("button[type=submit]")
+    browser.wait_for_url("/dashboard")
+
+    # Add to cart
+    browser.goto("/products/1")
+    browser.click("button.add-to-cart")
+    browser.wait_for_selector(".cart-count:text('1')")
+
+    # Checkout
+    browser.goto("/cart")
+    browser.click("button.checkout")
+    browser.fill("card_number", "4111111111111111")
+    browser.fill("expiry", "12/25")
+    browser.fill("cvv", "123")
+    browser.click("button.pay")
+
+    # Verify success
+    browser.wait_for_url("/order/confirmation")
+    assert browser.text_content("h1") == "Order Confirmed"
+```
+
+### API E2E Test
+
+```python
+# Test complete API workflow without browser
+def test_full_order_workflow(api_client):
+    # Register
+    response = api_client.post("/auth/register", json={
+        "email": "new@example.com",
+        "password": "secret123"
+    })
+    assert response.status_code == 201
+    token = response.json()["token"]
+
+    # Authenticate subsequent requests
+    api_client.headers["Authorization"] = f"Bearer {token}"
+
+    # Create order
+    response = api_client.post("/orders", json={
+        "items": [{"product_id": 1, "quantity": 2}]
+    })
+    assert response.status_code == 201
+    order_id = response.json()["id"]
+
+    # Process payment
+    response = api_client.post(f"/orders/{order_id}/pay", json={
+        "card_token": "tok_test_visa"
+    })
+    assert response.status_code == 200
+
+    # Verify order status
+    response = api_client.get(f"/orders/{order_id}")
+    assert response.json()["status"] == "paid"
+```
+
+**E2E Test Guidelines:**
+- Test only critical paths (login, checkout, key features)
+- Use stable selectors (data-testid, not CSS classes)
+- Keep tests independent - each creates its own data
+- Run in CI but not on every commit (slow)
+- Maximum 10% of test suite
+
 ## Test Isolation
 
 Each test must be completely independent:
