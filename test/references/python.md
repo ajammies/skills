@@ -300,3 +300,146 @@ pytest -x
 # Run last failed tests
 pytest --lf
 ```
+
+## Integration Testing
+
+### FastAPI Integration Test
+
+```python
+from fastapi.testclient import TestClient
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
+import pytest
+
+from app.main import app
+from app.database import Base, get_db
+
+@pytest.fixture
+def db():
+    """Create test database with rollback."""
+    engine = create_engine("sqlite:///:memory:")
+    Base.metadata.create_all(engine)
+    session = Session(engine)
+    yield session
+    session.rollback()
+    session.close()
+
+@pytest.fixture
+def client(db):
+    """Test client with database override."""
+    def override_get_db():
+        yield db
+    app.dependency_overrides[get_db] = override_get_db
+    yield TestClient(app)
+    app.dependency_overrides.clear()
+
+def test_create_and_retrieve_user(client, db):
+    # Create user via API
+    response = client.post("/users", json={
+        "email": "test@example.com",
+        "name": "Test User"
+    })
+    assert response.status_code == 201
+    user_id = response.json()["id"]
+
+    # Verify in database
+    from app.models import User
+    user = db.query(User).filter_by(id=user_id).first()
+    assert user.email == "test@example.com"
+
+    # Retrieve via API
+    response = client.get(f"/users/{user_id}")
+    assert response.status_code == 200
+    assert response.json()["name"] == "Test User"
+```
+
+### Database Integration with Transactions
+
+```python
+import pytest
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+@pytest.fixture(scope="session")
+def engine():
+    """Create engine once per test session."""
+    return create_engine("postgresql://test:test@localhost/testdb")
+
+@pytest.fixture(scope="session")
+def tables(engine):
+    """Create tables once per test session."""
+    Base.metadata.create_all(engine)
+    yield
+    Base.metadata.drop_all(engine)
+
+@pytest.fixture
+def db(engine, tables):
+    """Per-test session with automatic rollback."""
+    connection = engine.connect()
+    transaction = connection.begin()
+    session = Session(bind=connection)
+
+    yield session
+
+    session.close()
+    transaction.rollback()
+    connection.close()
+```
+
+## E2E Testing with Playwright
+
+```python
+import pytest
+from playwright.sync_api import Page, expect
+
+@pytest.fixture
+def authenticated_page(page: Page):
+    """Login before test."""
+    page.goto("/login")
+    page.fill("[name=email]", "user@example.com")
+    page.fill("[name=password]", "password123")
+    page.click("button[type=submit]")
+    page.wait_for_url("/dashboard")
+    return page
+
+def test_user_can_create_post(authenticated_page):
+    page = authenticated_page
+
+    # Navigate to create post
+    page.click("text=New Post")
+    page.wait_for_url("/posts/new")
+
+    # Fill form
+    page.fill("[name=title]", "My Test Post")
+    page.fill("[name=content]", "This is the content")
+    page.click("button:text('Publish')")
+
+    # Verify redirect and success
+    page.wait_for_url("/posts/*")
+    expect(page.locator("h1")).to_have_text("My Test Post")
+    expect(page.locator(".flash-success")).to_be_visible()
+
+def test_search_returns_results(page: Page):
+    page.goto("/")
+
+    # Perform search
+    page.fill("[name=search]", "python testing")
+    page.click("button:text('Search')")
+
+    # Verify results
+    page.wait_for_selector(".search-results")
+    results = page.locator(".result-item")
+    expect(results).to_have_count_greater_than(0)
+```
+
+### Running Playwright Tests
+
+```bash
+# Install playwright
+pip install pytest-playwright
+playwright install
+
+# Run E2E tests
+pytest tests/e2e/ --headed  # With browser visible
+pytest tests/e2e/           # Headless
+```
