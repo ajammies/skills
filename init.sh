@@ -76,6 +76,61 @@ else
     echo "✓ Hooks symlink created: $HOOKS_TARGET -> $HOOKS_SOURCE"
 fi
 
+# Configure UserPromptSubmit hook in settings.json
+SETTINGS_FILE="$CLAUDE_DIR/settings.json"
+HOOK_COMMAND="$HOOKS_SOURCE/skill-activation.sh"
+
+configure_hook() {
+    if [ ! -f "$SETTINGS_FILE" ]; then
+        # Create new settings file with hook
+        cat > "$SETTINGS_FILE" << EOF
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOOK_COMMAND"
+          }
+        ]
+      }
+    ]
+  }
+}
+EOF
+        echo "✓ Created settings.json with skill activation hook"
+    elif grep -q "skill-activation.sh" "$SETTINGS_FILE"; then
+        echo "✓ Skill activation hook already configured in settings.json"
+    else
+        # Settings exists but no hook - need to merge
+        # Use a temp file approach with jq if available, otherwise warn
+        if command -v jq &> /dev/null; then
+            HOOK_CONFIG='{"UserPromptSubmit":[{"hooks":[{"type":"command","command":"'"$HOOK_COMMAND"'"}]}]}'
+            jq --argjson hook "$HOOK_CONFIG" '.hooks = (.hooks // {}) + $hook' "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" && mv "$SETTINGS_FILE.tmp" "$SETTINGS_FILE"
+            echo "✓ Added skill activation hook to settings.json"
+        else
+            echo "! settings.json exists but jq is not installed"
+            echo "  Please manually add the following to $SETTINGS_FILE:"
+            echo ""
+            echo '  "hooks": {'
+            echo '    "UserPromptSubmit": ['
+            echo '      {'
+            echo '        "hooks": ['
+            echo '          {'
+            echo '            "type": "command",'
+            echo "            \"command\": \"$HOOK_COMMAND\""
+            echo '          }'
+            echo '        ]'
+            echo '      }'
+            echo '    ]'
+            echo '  }'
+        fi
+    fi
+}
+
+configure_hook
+
 echo ""
 echo "Setup complete! Your commands and hooks are now available globally."
 echo "Add .md files to $COMMANDS_SOURCE to create new slash commands."
