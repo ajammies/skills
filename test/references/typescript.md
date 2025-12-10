@@ -320,3 +320,189 @@ it.skip('not ready yet', () => {
   // ...
 });
 ```
+
+## Integration Testing
+
+### API Integration Test
+
+```typescript
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { createServer } from '../src/server';
+import { prisma } from '../src/database';
+
+describe('User API', () => {
+  let server: ReturnType<typeof createServer>;
+
+  beforeAll(async () => {
+    server = createServer();
+    await server.listen(0); // Random port
+  });
+
+  afterAll(async () => {
+    await server.close();
+    await prisma.$disconnect();
+  });
+
+  it('should create and retrieve user', async () => {
+    // Create user
+    const createRes = await fetch(`${server.url}/api/users`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: 'test@example.com', name: 'Test' }),
+    });
+    expect(createRes.status).toBe(201);
+    const { id } = await createRes.json();
+
+    // Verify in database
+    const dbUser = await prisma.user.findUnique({ where: { id } });
+    expect(dbUser?.email).toBe('test@example.com');
+
+    // Retrieve via API
+    const getRes = await fetch(`${server.url}/api/users/${id}`);
+    expect(getRes.status).toBe(200);
+    const user = await getRes.json();
+    expect(user.name).toBe('Test');
+  });
+});
+```
+
+### Database Integration with Transactions
+
+```typescript
+import { describe, it, expect, beforeEach } from 'vitest';
+import { prisma } from '../src/database';
+
+describe('Order Service', () => {
+  beforeEach(async () => {
+    // Clean up before each test
+    await prisma.order.deleteMany();
+    await prisma.user.deleteMany();
+  });
+
+  it('should create order with items', async () => {
+    // Arrange
+    const user = await prisma.user.create({
+      data: { email: 'test@example.com', name: 'Test' },
+    });
+
+    // Act
+    const order = await prisma.order.create({
+      data: {
+        userId: user.id,
+        items: {
+          create: [
+            { productId: 1, quantity: 2, price: 10.00 },
+            { productId: 2, quantity: 1, price: 25.00 },
+          ],
+        },
+      },
+      include: { items: true },
+    });
+
+    // Assert
+    expect(order.items).toHaveLength(2);
+    expect(order.items[0].quantity).toBe(2);
+  });
+});
+```
+
+## E2E Testing with Playwright
+
+```typescript
+import { test, expect } from '@playwright/test';
+
+test.describe('Authentication', () => {
+  test('user can login and view dashboard', async ({ page }) => {
+    // Navigate to login
+    await page.goto('/login');
+
+    // Fill credentials
+    await page.fill('[name=email]', 'user@example.com');
+    await page.fill('[name=password]', 'password123');
+    await page.click('button[type=submit]');
+
+    // Verify redirect to dashboard
+    await expect(page).toHaveURL('/dashboard');
+    await expect(page.locator('h1')).toHaveText('Welcome back');
+  });
+
+  test('shows error for invalid credentials', async ({ page }) => {
+    await page.goto('/login');
+    await page.fill('[name=email]', 'wrong@example.com');
+    await page.fill('[name=password]', 'wrongpassword');
+    await page.click('button[type=submit]');
+
+    await expect(page.locator('.error-message')).toBeVisible();
+    await expect(page.locator('.error-message')).toHaveText('Invalid credentials');
+  });
+});
+
+test.describe('Shopping Cart', () => {
+  test.beforeEach(async ({ page }) => {
+    // Login before each test
+    await page.goto('/login');
+    await page.fill('[name=email]', 'user@example.com');
+    await page.fill('[name=password]', 'password123');
+    await page.click('button[type=submit]');
+    await page.waitForURL('/dashboard');
+  });
+
+  test('user can add item to cart and checkout', async ({ page }) => {
+    // Add product to cart
+    await page.goto('/products/1');
+    await page.click('button:text("Add to Cart")');
+    await expect(page.locator('.cart-count')).toHaveText('1');
+
+    // Go to cart and checkout
+    await page.click('[data-testid=cart-icon]');
+    await page.click('button:text("Checkout")');
+
+    // Fill payment info
+    await page.fill('[name=card_number]', '4111111111111111');
+    await page.fill('[name=expiry]', '12/25');
+    await page.fill('[name=cvv]', '123');
+    await page.click('button:text("Pay Now")');
+
+    // Verify success
+    await expect(page).toHaveURL(/\/orders\/\d+/);
+    await expect(page.locator('h1')).toHaveText('Order Confirmed');
+  });
+});
+```
+
+### Playwright Configuration
+
+```typescript
+// playwright.config.ts
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+  testDir: './tests/e2e',
+  fullyParallel: true,
+  retries: process.env.CI ? 2 : 0,
+  use: {
+    baseURL: 'http://localhost:3000',
+    trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+  },
+  webServer: {
+    command: 'npm run dev',
+    url: 'http://localhost:3000',
+    reuseExistingServer: !process.env.CI,
+  },
+});
+```
+
+### Running Playwright Tests
+
+```bash
+# Install
+npm install -D @playwright/test
+npx playwright install
+
+# Run tests
+npx playwright test              # Headless
+npx playwright test --headed     # With browser
+npx playwright test --ui         # Interactive UI
+npx playwright show-report       # View HTML report
+```
