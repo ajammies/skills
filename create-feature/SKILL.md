@@ -42,7 +42,12 @@ This skill follows an explicit workflow for creating features and major changes.
   - Testing plan (user flows, edge cases, common failures)
   - ⏸️ **STOP**: Wait for user approval of TDD before continuing.
 
-### Step 4: Write plan to `docs/plans/plan-<feature>.md`
+### Step 4: Push and create PR
+   ```bash
+   git push -u origin <branch>
+   gh pr create --draft --title "feat: <title>" --body "<TDD>"
+   ```
+   Use the TDD from Step 3 as the PR body. Draft PR indicates work-in-progress.
 
 ### Step 5: Implement
   - Iteratively implement each commit in the plan
@@ -65,20 +70,14 @@ This skill follows an explicit workflow for creating features and major changes.
   - Fix any issues found before proceeding
   - ⏸️ **STOP**: Wait for user approval before continuing.
 
-### Step 8: Push and create PR
-   ```bash
-   git push -u origin <branch>
-   gh pr create --title "<title>" --body "<description>"
-   ```
-   ⏸️ **STOP**: Wait for user to approve PR before continuing.
-
-### Step 9: Merge and cleanup
+### Step 8: Merge and cleanup
    ```bash
    gh pr merge --squash --delete-branch
    git checkout main && git pull
    ```
+   ⏸️ **STOP**: Wait for user to approve merge before continuing.
 
-### Step 10: Reflect
+### Step 9: Reflect
   - Review what worked, what caused friction
   - Output recommendations table:
     | Type | Priority | Change | Why |
