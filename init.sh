@@ -8,6 +8,8 @@ SKILLS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLAUDE_DIR="$HOME/.claude"
 COMMANDS_SOURCE="$SKILLS_DIR/commands"
 COMMANDS_TARGET="$CLAUDE_DIR/commands"
+HOOKS_SOURCE="$SKILLS_DIR/hooks"
+HOOKS_TARGET="$CLAUDE_DIR/hooks"
 
 echo "Setting up Claude Code skills from: $SKILLS_DIR"
 
@@ -44,6 +46,36 @@ else
     echo "✓ Commands symlink created: $COMMANDS_TARGET -> $COMMANDS_SOURCE"
 fi
 
+# Handle hooks symlink
+if [ -L "$HOOKS_TARGET" ]; then
+    current_link=$(readlink "$HOOKS_TARGET")
+    if [ "$current_link" = "$HOOKS_SOURCE" ]; then
+        echo "✓ Hooks symlink already configured"
+    else
+        echo "! Hooks symlink exists but points to: $current_link"
+        read -p "Replace with link to $HOOKS_SOURCE? [y/N] " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            rm "$HOOKS_TARGET"
+            ln -s "$HOOKS_SOURCE" "$HOOKS_TARGET"
+            echo "✓ Hooks symlink updated"
+        else
+            echo "Skipped"
+        fi
+    fi
+elif [ -d "$HOOKS_TARGET" ]; then
+    echo "! Directory exists at $HOOKS_TARGET"
+    echo "  Please backup/remove it manually, then re-run this script"
+    exit 1
+elif [ -e "$HOOKS_TARGET" ]; then
+    echo "! File exists at $HOOKS_TARGET"
+    echo "  Please remove it manually, then re-run this script"
+    exit 1
+else
+    ln -s "$HOOKS_SOURCE" "$HOOKS_TARGET"
+    echo "✓ Hooks symlink created: $HOOKS_TARGET -> $HOOKS_SOURCE"
+fi
+
 echo ""
-echo "Setup complete! Your commands are now available globally."
+echo "Setup complete! Your commands and hooks are now available globally."
 echo "Add .md files to $COMMANDS_SOURCE to create new slash commands."
