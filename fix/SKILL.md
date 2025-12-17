@@ -56,30 +56,23 @@ git checkout -b fix/<issue-or-description>
 - Consider: Is this a code bug, design flaw, or missing requirement?
 - ⏸️ **STOP**: Present root cause analysis to user. Wait for user confirmation before continuing.
 
-### Step 6: Push and create PR
-```bash
-git push -u origin fix/<issue-or-description>
-gh pr create --draft --title "fix: <description>" --body "<bug-analysis-report>"
-```
-Use the Bug Analysis Report from Step 5 as the PR body. Draft PR indicates work-in-progress.
-
-### Step 7: Write regression test
+### Step 6: Write regression test
 - Write a test that **fails** with the current buggy behavior
 - Test should pass once the fix is applied
 - This prevents the bug from being reintroduced later
 - Commit the failing test separately (optional)
 
-### Step 8: Identify related vulnerabilities
+### Step 7: Identify related vulnerabilities
 - Search codebase for similar patterns that could have the same bug
 - List any other locations where this issue might reoccur
 - Note in the Bug Analysis Report for future reference or additional fixes
 
-### Step 9: Fix - Implement minimal change
+### Step 8: Fix - Implement minimal change
 - Apply the **minimal change principle** - smallest fix that resolves the issue
 - Verify the regression test now passes
 - Run existing tests to ensure no breakage
 
-### Step 10: Verify - Confirm resolution
+### Step 9: Verify - Confirm resolution
 - Re-run the reproduction steps - bug should be gone
 - Test edge cases related to the fix
 - Run full test suite
@@ -87,18 +80,26 @@ Use the Bug Analysis Report from Step 5 as the PR body. Draft PR indicates work-
 npm run test:run && npm run typecheck
 ```
 
-### Step 11: Code Review
+### Step 10: Code Review
 - Use `review` skill to analyze changes
 - Fix any issues found before proceeding
 
-### Step 12: Clean up and merge
+### Step 11: Clean up and PR
 - Remove any temporary logging/debug statements added during investigation
 - Ensure no sensitive data is logged
+```bash
+git push -u origin <branch>
+gh pr create --title "fix: <description>" --body "<bug-analysis-report>"
+```
+Use the Bug Analysis Report (from Step 5) as the PR body.
+
+⏸️ **STOP**: Wait for user to approve PR before merging.
+
+### Step 12: Merge and cleanup
 ```bash
 gh pr merge --squash --delete-branch
 git checkout main && git pull
 ```
-⏸️ **STOP**: Wait for user to approve merge before continuing.
 
 ## Output Format
 

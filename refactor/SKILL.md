@@ -39,14 +39,7 @@ git checkout -b refactor/<description>
   - Reduce coupling
 - ⏸️ **STOP**: Confirm scope with user. Wait for user input before continuing.
 
-### Step 4: Push and create PR
-```bash
-git push -u origin refactor/<description>
-gh pr create --draft --title "refactor: <description>" --body "<scope and approach>"
-```
-Use the scope/approach from Step 3 as the PR body. Draft PR indicates work-in-progress.
-
-### Step 5: Implement
+### Step 4: Implement
 - Iteratively implement each change in the plan
   - Concise, clear, imperative commit message (the "what")
   - Comprehensive, concise, commit message (the "how" and "why")
@@ -55,7 +48,7 @@ Use the scope/approach from Step 3 as the PR body. Draft PR indicates work-in-pr
   - ⏸️ **STOP**: Wait for user approval after each commit unless instructed otherwise.
 - Keep bug fixes separate - create issues for bugs found
 
-### Step 6: Review - Verify behavior preserved
+### Step 5: Review - Verify behavior preserved
 - Run full test suite
 - Compare before/after behavior
 - Evaluate each goal with ✓ (pass) or ✗ (fail):
@@ -66,16 +59,16 @@ Use the scope/approach from Step 3 as the PR body. Draft PR indicates work-in-pr
   - No new features added
 - ⏸️ **STOP**: Present changes to user. Wait for user input before continuing.
 
-### Step 7: Code Review
+### Step 6: Code Review
 - Use `review` skill to analyze changes
 - Fix any issues found before proceeding
 
-### Step 8: Merge and cleanup
+### Step 7: PR - Push and create pull request
 ```bash
-gh pr merge --squash --delete-branch
-git checkout main && git pull
+git push -u origin refactor/<description>
+gh pr create --title "refactor: <description>" --body "<changes made>"
 ```
-⏸️ **STOP**: Wait for user to approve merge before continuing.
+⏸️ **STOP**: Wait for user to approve and merge before continuing.
 
 ## Output Format
 
