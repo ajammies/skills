@@ -174,6 +174,7 @@ Replace inline validation with helper.
 - Keep functions small enough to fit in your head
 - Do not abstract until you see the pattern three times
 - Prefer explicit over implicit - no magic
+- Never default parameters to null with singleton fallback - require explicit passing
 - Always read file before editing - never propose changes to code you haven't read
 - Use pure functions, immutability, no side effects
 - Flow data through parameters, not global state
