@@ -19,27 +19,41 @@ git push origin main
 git checkout -b refactor/<description>
 ```
 
-### Step 2: Understand - Explore and verify baseline
+### Step 2: Research - Explore and verify baseline
 - Use Explore agent to understand the code to refactor
 - Run existing tests to establish baseline
   ```bash
   npm run test:run
   ```
-- ⏸️ **STOP**: If tests fail, fix them first or confirm with user before proceeding. Wait for user input before continuing.
+- If tests fail, fix them first or confirm with user before proceeding
 - Note current behavior and dependencies
+- ⏸️ **STOP**: Present research findings before planning. Wait for user input before continuing.
 
-### Step 3: Plan - Define scope and approach
-- Define what's IN scope (specific files, patterns, goals)
-- Define what's OUT of scope (no new features, no bug fixes)
-- Choose refactoring approach:
-  - Extract method/function
-  - Rename for clarity
-  - Simplify conditionals
-  - Remove duplication
-  - Reduce coupling
-- ⏸️ **STOP**: Confirm scope with user. Wait for user input before continuing.
+### Step 3: Propose a Technical Design Document
+- Enter planning mode
+- Create the TDD that has the following sections:
+  - Refactoring Approach - choose and justify the strategy:
+    - Extract method/function
+    - Rename for clarity
+    - Simplify conditionals
+    - Remove duplication
+    - Reduce coupling
+  - Overview - concise, plain-english describe the delta between current state and intended state, and key considerations
+  - Scope - what's IN scope (specific files, patterns, goals) and what's OUT of scope (no new features, no bug fixes)
+  - Relevant specific coding best practices
+  - List of Planned Changes
+  - List of small, atomic, commits (each is deletable, testable, single purpose)
+- Testing plan (verify behavior preserved, edge cases)
+- ⏸️ **STOP**: Wait for user approval of TDD before continuing.
 
-### Step 4: Implement
+### Step 4: Push and create PR
+```bash
+git push -u origin <branch>
+gh pr create --draft --title "refactor: <description>" --body "<TDD>"
+```
+Use the TDD from Step 3 as the PR body. Draft PR indicates work-in-progress.
+
+### Step 5: Implement
 - Iteratively implement each change in the plan
   - Concise, clear, imperative commit message (the "what")
   - Comprehensive, concise, commit message (the "how" and "why")
@@ -48,7 +62,7 @@ git checkout -b refactor/<description>
   - ⏸️ **STOP**: Wait for user approval after each commit unless instructed otherwise.
 - Keep bug fixes separate - create issues for bugs found
 
-### Step 5: Review - Verify behavior preserved
+### Step 6: Test - Verify behavior preserved
 - Run full test suite
 - Compare before/after behavior
 - Evaluate each goal with ✓ (pass) or ✗ (fail):
@@ -57,44 +71,92 @@ git checkout -b refactor/<description>
   - Code is simpler/clearer
   - Coupling reduced
   - No new features added
-- ⏸️ **STOP**: Present changes to user. Wait for user input before continuing.
 
-### Step 6: Code Review
+### Step 7: Code Review
 - Use `review` skill to analyze changes
 - Fix any issues found before proceeding
+- ⏸️ **STOP**: Wait for user approval before continuing.
 
-### Step 7: PR - Push and create pull request
+### Step 8: Merge and cleanup
 ```bash
-git push -u origin refactor/<description>
-gh pr create --title "refactor: <description>" --body "<changes made>"
+gh pr merge --squash --delete-branch
+git checkout main && git pull
 ```
-⏸️ **STOP**: Wait for user to approve and merge before continuing.
+⏸️ **STOP**: Wait for user to approve merge before continuing.
 
-## Output Format
+### Step 9: Reflect
+- Review what worked, what caused friction
+- Output recommendations table:
+  | Type | Priority | Change | Why |
+  |------|----------|--------|-----|
+  | `claude.md` | high/medium/low | Specific change | Reason |
+  | `skill` | high/medium/low | Specific change | Reason |
+- ⏸️ **STOP**: Ask user if they want to implement any recommendations. Wait for user input before continuing.
 
-### Refactoring Summary
+## Error Handling
+- Clearly describe the error
+- Recommend the best path to proceed
+- ⏸️ **STOP**: Wait for user approval before continuing.
+
+## Examples
+
+### Example TDD
 
 ```markdown
-## Refactoring Summary
+# TDD: Simplify Authentication Logic
 
-**Scope**: [What was refactored]
-**Goal**: [Why - reduce complexity, improve clarity, etc.]
-**Result**: X/5 passed
+## Refactoring Approach
+**Strategy**: Extract method + Simplify conditionals
 
-## Review
+The current auth logic has deeply nested conditionals and duplicated validation.
+We'll extract common validation into helper functions and flatten the control flow.
 
-- ✓ Behavior unchanged: [brief explanation]
-- ✓ Tests still pass: All 42 tests passing
-- ✓ Code is simpler/clearer: [brief explanation]
-- ✗ Coupling reduced: [issue found]
-- ✓ No new features added: [brief explanation]
+## Overview
+Currently `auth.ts` has 3 functions with duplicated token validation logic and
+nested if/else blocks 4 levels deep. After refactoring, validation is centralized
+in `validateToken()` and conditionals are flattened using early returns.
 
-## Changes Made
+Key considerations:
+- No behavior changes - same inputs produce same outputs
+- All 15 existing tests must continue to pass
+- No new features (defer rate limiting to separate PR)
+
+## Scope
+**IN scope**:
+- `src/auth/auth.ts` - extract validateToken(), flatten conditionals
+- `src/auth/session.ts` - use shared validateToken()
+
+**OUT of scope**:
+- Bug fixes (found edge case - created issue #42)
+- New features (rate limiting deferred)
+- Other files
+
+## Planned Changes
 
 | File | Change | Reason |
 |------|--------|--------|
-| `file.ts` | Extracted method X | Reduce duplication |
-| `file.ts` | Renamed Y to Z | Improve clarity |
+| `src/auth/auth.ts` | Extract validateToken() | Remove duplication |
+| `src/auth/auth.ts` | Replace nested if/else with early returns | Reduce complexity |
+| `src/auth/session.ts` | Use validateToken() | Single source of truth |
+
+## Commits
+
+### 1. refactor(auth): extract validateToken helper
+Move duplicated token validation into single function.
+
+### 2. refactor(auth): flatten conditionals with early returns
+Replace nested if/else with guard clauses.
+
+### 3. refactor(session): use shared validateToken
+Replace inline validation with helper.
+
+## Testing Plan
+
+**Behavior verification:**
+- All 15 existing tests pass unchanged
+- Manual test: valid token → success
+- Manual test: invalid token → rejection
+- Manual test: expired token → rejection
 ```
 
 ## Principles
