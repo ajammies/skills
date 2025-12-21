@@ -21,7 +21,16 @@ description: Guide for creating effective skills. This skill should be used when
 4. **Create** - Write files to `.claude/skills/<name>/`
    ⟳ Repeat if user requests changes
 
-5. **Test** - Verify skill appears in `/skills` and can be invoked
+5. **Register** - Add skill to `hooks/skill-rules.json` with keywords for auto-activation
+   ```json
+   {
+     "skill": "<name>",
+     "priority": "high",
+     "keywords": ["keyword1", "keyword2", "trigger phrase"]
+   }
+   ```
+
+6. **Test** - Verify skill appears in `/skills` and can be invoked
 
 This skill provides guidance for creating effective skills.
 
