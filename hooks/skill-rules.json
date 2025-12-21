@@ -45,6 +45,11 @@
       "skill": "test",
       "priority": "critical",
       "keywords": ["test", "coverage", "write tests", "unit test", "add tests"]
+    },
+    {
+      "skill": "status",
+      "priority": "high",
+      "keywords": ["status", "what am I working on", "where was I", "work stack"]
     }
   ]
 }
